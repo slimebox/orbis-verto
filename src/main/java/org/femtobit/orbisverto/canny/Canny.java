@@ -1,14 +1,13 @@
 package org.femtobit.orbisverto.canny;
 
 import org.femtobit.orbisverto.util.Vector2i;
+import org.femtobit.smooth.GaussianSmooth;
 
 import java.util.Arrays;
 import java.util.EmptyStackException;
 import java.util.Stack;
 
 public class Canny {
-
-    // GaussianSmooth smoothing;
 
     private int output_width;
     private int output_height;
@@ -20,7 +19,7 @@ public class Canny {
 
         int[] output = new int[width * height];
 
-        int[] temp1D = new int[width * height];
+        int[] temp1D;
         int[][] temp2D = new int[width][height];
         int[][] gaussianP = new int[width][height];
         int[][] gaussianQ = new int[width][height];
@@ -33,12 +32,11 @@ public class Canny {
         int[][] tracked;
 
         int result;
-        int temp = 0;
 
         // initialise to all-opaque
         Arrays.fill(output, 0xff000000);
 
-        // temp1D = gaussian.smooth_image(source, width, height, size, theta);
+        temp1D = GaussianSmooth.smooth_image(source, width, height, size, theta);
 
         for(int i = 0; i < temp1D.length; i++) {
             temp1D[i] = temp1D[i] & 0x000000ff;
