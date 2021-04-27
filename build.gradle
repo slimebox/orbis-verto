@@ -4,7 +4,7 @@ plugins {
 }
 
 group 'org.femtobit'
-version '0.1'
+version '0.1.1'
 
 repositories {
     mavenCentral()
@@ -16,7 +16,7 @@ configurations {
 
 dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.12'
-    deployerJars "org.apache.maven.wagon:wagon-ssh:2.2+"
+    deployerJars "org.apache.maven.wagon:wagon-ssh-external:3.4.0"
 }
 
 uploadArchives {
@@ -25,7 +25,7 @@ uploadArchives {
             configuration = configurations.deployerJars
             String keyFile = System.getenv("sshKey")
             System.out.println(keyFile)
-            repository( url: "scp://maven.gemwire.uk:12200/var/web/maven/") {
+            repository( url: "scpexe://maven.gemwire.uk:12200/var/web/maven/") {
                 authentication(userName: "gem", privateKey: keyFile)
             }
         }
